@@ -36,7 +36,7 @@
             this.btnHideControls = new System.Windows.Forms.Button();
             this.notifyIconSystemTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.поверхВсехОконToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.topmostToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemShowControls = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemShowDate = new System.Windows.Forms.ToolStripMenuItem();
@@ -48,7 +48,7 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.запускатьПриСтартеWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.закрытьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.выбратьШрифтToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fontDialog1 = new System.Windows.Forms.FontDialog();
             this.contextMenuStrip.SuspendLayout();
@@ -57,7 +57,7 @@
             // labelTime
             // 
             this.labelTime.AutoSize = true;
-            this.labelTime.BackColor = System.Drawing.SystemColors.Info;
+            this.labelTime.BackColor = System.Drawing.SystemColors.Control;
             this.labelTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelTime.Location = new System.Drawing.Point(12, 50);
             this.labelTime.Name = "labelTime";
@@ -86,7 +86,7 @@
             // 
             // btnHideControls
             // 
-            this.btnHideControls.BackColor = System.Drawing.SystemColors.Info;
+            this.btnHideControls.BackColor = System.Drawing.SystemColors.Control;
             this.btnHideControls.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btnHideControls.ForeColor = System.Drawing.SystemColors.Desktop;
             this.btnHideControls.Location = new System.Drawing.Point(12, 159);
@@ -110,7 +110,7 @@
             // contextMenuStrip
             // 
             this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.поверхВсехОконToolStripMenuItem,
+            this.topmostToolStripMenuItem,
             this.toolStripMenuItemShowControls,
             this.toolStripSeparator1,
             this.toolStripMenuItemShowDate,
@@ -120,17 +120,17 @@
             this.toolStripSeparator3,
             this.запускатьПриСтартеWindowsToolStripMenuItem,
             this.toolStripSeparator4,
-            this.закрытьToolStripMenuItem});
+            this.closeToolStripMenuItem});
             this.contextMenuStrip.Name = "contextMenuStrip1";
-            this.contextMenuStrip.Size = new System.Drawing.Size(251, 204);
+            this.contextMenuStrip.Size = new System.Drawing.Size(251, 182);
             // 
-            // поверхВсехОконToolStripMenuItem
+            // topmostToolStripMenuItem
             // 
-            this.поверхВсехОконToolStripMenuItem.CheckOnClick = true;
-            this.поверхВсехОконToolStripMenuItem.Name = "поверхВсехОконToolStripMenuItem";
-            this.поверхВсехОконToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
-            this.поверхВсехОконToolStripMenuItem.Text = "Поверх всех окон";
-            this.поверхВсехОконToolStripMenuItem.CheckedChanged += new System.EventHandler(this.поверхВсехОконToolStripMenuItem_CheckedChanged);
+            this.topmostToolStripMenuItem.CheckOnClick = true;
+            this.topmostToolStripMenuItem.Name = "topmostToolStripMenuItem";
+            this.topmostToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
+            this.topmostToolStripMenuItem.Text = "Поверх всех окон";
+            this.topmostToolStripMenuItem.Click += new System.EventHandler(this.topmostToolStripMenuItem_CheckedChanged);
             // 
             // toolStripMenuItemShowControls
             // 
@@ -152,7 +152,7 @@
             this.toolStripMenuItemShowDate.Name = "toolStripMenuItemShowDate";
             this.toolStripMenuItemShowDate.Size = new System.Drawing.Size(250, 22);
             this.toolStripMenuItemShowDate.Text = "Показать дату";
-            this.toolStripMenuItemShowDate.Click += new System.EventHandler(this.показатьДатуToolStripMenuItem_Click);
+            this.toolStripMenuItemShowDate.Click += new System.EventHandler(this.showDateToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
@@ -171,14 +171,14 @@
             // цветФонаToolStripMenuItem
             // 
             this.цветФонаToolStripMenuItem.Name = "цветФонаToolStripMenuItem";
-            this.цветФонаToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.цветФонаToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.цветФонаToolStripMenuItem.Text = "Цвет фона";
             this.цветФонаToolStripMenuItem.Click += new System.EventHandler(this.цветФонаToolStripMenuItem_Click);
             // 
             // цветШрифтаToolStripMenuItem
             // 
             this.цветШрифтаToolStripMenuItem.Name = "цветШрифтаToolStripMenuItem";
-            this.цветШрифтаToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.цветШрифтаToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.цветШрифтаToolStripMenuItem.Text = "Цвет шрифта";
             this.цветШрифтаToolStripMenuItem.Click += new System.EventHandler(this.цветШрифтаToolStripMenuItem_Click);
             // 
@@ -208,12 +208,12 @@
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new System.Drawing.Size(247, 6);
             // 
-            // закрытьToolStripMenuItem
+            // closeToolStripMenuItem
             // 
-            this.закрытьToolStripMenuItem.Name = "закрытьToolStripMenuItem";
-            this.закрытьToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
-            this.закрытьToolStripMenuItem.Text = "Закрыть";
-            this.закрытьToolStripMenuItem.Click += new System.EventHandler(this.закрытьToolStripMenuItem_Click);
+            this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
+            this.closeToolStripMenuItem.Text = "Закрыть";
+            this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             // 
             // выбратьШрифтToolStripMenuItem
             // 
@@ -230,7 +230,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.Info;
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(224, 211);
             this.ContextMenuStrip = this.contextMenuStrip;
             this.Controls.Add(this.btnHideControls);
@@ -260,7 +260,7 @@
         private System.Windows.Forms.NotifyIcon notifyIconSystemTray;
         private System.Windows.Forms.ToolStripMenuItem выбратьШрифтToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip;
-        private System.Windows.Forms.ToolStripMenuItem поверхВсехОконToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem topmostToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemShowControls;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemShowDate;
@@ -272,7 +272,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem запускатьПриСтартеWindowsToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-        private System.Windows.Forms.ToolStripMenuItem закрытьToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
         private System.Windows.Forms.FontDialog fontDialog1;
     }
 }

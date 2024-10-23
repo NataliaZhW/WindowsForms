@@ -13,44 +13,77 @@ using System.Runtime.InteropServices;
 using System.IO;
 using System.Reflection;
 using Microsoft.Win32;
+using System.Diagnostics;
+using System.Threading;
 
 
 namespace Clock
 {
+
     public partial class MainForm : System.Windows.Forms.Form
     {
         ColorDialog backgroundColorDialog;
         ColorDialog foregroundColorDialog;
         ChoozeFont choozeFontDialog;
         FontDialog fontDialog;
+        bool autoLoad;
 
         public MainForm()
         {
-            InitializeComponent();
-            this.TransparencyKey = Color.Empty;
-            backgroundColorDialog = new ColorDialog();
-            foregroundColorDialog = new ColorDialog();
+            //Не работает
+            //this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.closeToolStripMenuItem_Click); //global_FormClosed
+            
+            
+            //Не работает, только выгружает
+            //bool b = false;
+            //foreach (Process process in Process.GetProcesses())
+            //{
+            //    // выводим id и имя процесса
+            //    //comboBoxFonts.Items.Add($"ID: {process.Id}  Name: {process.ProcessName}");
 
-            //foregroundColorDialog.Color = Color.Blue;
-            //backgroundColorDialog.Color = Color.Black;
+            //    if (process.ProcessName == "Clock")
+            //    {
+            //        //process. Modules. FileName();
+            //        process.Kill();
+            //        //process.Start();
+            //        b = true;
+            //    }
+
+            //    //Console.WriteLine($"ID: {process.Id}  Name: {process.ProcessName}");
+            //}
+
+            //if (!b)
+            //{            
+                InitializeComponent();
+            //}
+            this.TransparencyKey = Color.Empty;
+            backgroundColorDialog = new ColorDialog();//цвет шрифта
+            foregroundColorDialog = new ColorDialog();//цвет фона
+
            
             choozeFontDialog = new ChoozeFont();
             fontDialog = new FontDialog();
+
+            foregroundColorDialog.Color = Color.DarkSlateGray;
+            backgroundColorDialog.Color = Color.LawnGreen;// //Blue
+            labelTime.ForeColor = foregroundColorDialog.Color;
             
             SetVisibility(false);
+
             this.Location = new Point
-            (10,//System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width - this.Width
-            10);//System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height - this.Height
+                (10,//System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width - this.Width
+                10);//System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height - this.Height
             this.Text += $"{this.Location.X}x{this.Location.Y}";
             SetFontDirectory();
+            
         }
 
         void SetFontDirectory()
         {
-            string location = Assembly.GetExecutingAssembly().Location;
-            string path = Path.GetDirectoryName(location);
+            string location = Assembly.GetExecutingAssembly().Location;//Получаем полный адрес исполняемого файла
+            string path = Path.GetDirectoryName(location);//Из адреса извлекаем путь к файлу
             //MessageBox.Show(path);
-            Directory.SetCurrentDirectory($"{path}\\..\\..\\Fonts");
+            Directory.SetCurrentDirectory($"{path}\\..\\..\\Fonts");//Переходим в каталог со шрифтами \\f2
             //MessageBox.Show(Directory.GetCurrentDirectory());
 
         }
@@ -81,36 +114,24 @@ namespace Clock
             cbShowDate.Visible = visible;//дата
             btnHideControls.Visible = visible;//скрыть
             // Visible - видимость 
-            labelTime.BackColor = visible ? Color.Empty : Color.LightGoldenrodYellow;//фон
+            labelTime.ForeColor =  backgroundColorDialog.Color;//цвет шрифта? 
+            labelTime.BackColor =  foregroundColorDialog.Color;//цвет фона? Color.LightGoldenrodYellow
+            //labelTime.ForeColor = visible ? Color.Empty : backgroundColorDialog.Color;//цвет шрифта? 
+            //labelTime.BackColor = visible ? Color.Empty : foregroundColorDialog.Color;//цвет фона? Color.LightGoldenrodYellow
         }
 
         private void btnHideControls_Click(object sender, EventArgs e)
-        {
-            //this.TransparencyKey = this.BackColor;
-            //this.FormBorderStyle = FormBorderStyle.None;
-            //this.ShowInTaskbar = false;
-            //cbShowDate.Visible = false;
-            //btnHideControls.Visible = false;
-            //labelTime.BackColor = Color.LightGoldenrodYellow;
-
+        {           
             //SetVisibility(false);
 
-            //поверхВсехОконToolStripMenuItem.Checked = false;
             toolStripMenuItemShowControls.Checked = false;
             //MessageBox.Show("Hide controls button");
+            //notifyIconSystemTray.ShowBalloonTip(3, "Alerts!", "Для того чтобы вернуть как было, нужно ткнуть 2 раза мышей по часам, или по этой иконке", ToolTipIcon.Info);
         }
 
         private void labelTime_DoubleClick(object sender, EventArgs e)
-        {
-            //this.TransparencyKey = Color.Empty;
-            //this.FormBorderStyle = FormBorderStyle.Sizable;
-            //this.ShowInTaskbar = true;
-            //cbShowDate.Visible = true;
-            //btnHideControls.Visible = true;
-            //labelTime.BackColor = Color.Empty;
-            
-        //SetVisibility(true);
-            
+        {       
+        //SetVisibility(true);            
             //поверхВсехОконToolStripMenuItem.Checked = (поверхВсехОконToolStripMenuItem.Checked == false) ? true : false;
             toolStripMenuItemShowControls.Checked = true;
         }
@@ -120,26 +141,24 @@ namespace Clock
             notifyIconSystemTray.Text = "Curret time\n" + labelTime.Text;
         }
 
-        private void закрытьToolStripMenuItem_Click(object sender, EventArgs e)
+        private void closeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        private void показатьДатуToolStripMenuItem_Click(object sender, EventArgs e)
+        private void showDateToolStripMenuItem_Click(object sender, EventArgs e)
         {
             cbShowDate.Checked = ((ToolStripMenuItem)sender).Checked;
         }
 
-        private void поверхВсехОконToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        private void topmostToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
-            this.TopMost = поверхВсехОконToolStripMenuItem.Checked;
+            this.TopMost = topmostToolStripMenuItem.Checked;
         }
 
         private void toolStripMenuItemShowControls_Click(object sender, EventArgs e)
-        {
-            //поверхВсехОконToolStripMenuItem.Checked = (поверхВсехОконToolStripMenuItem.Checked == false)? true: false;
-            //toolStripMenuItemTopmost.Checked = ((ToolStripMenuItem)sender).Checked;
-            //toolStripMenuItemShowControls;
+        {            
+            SetVisibility(((ToolStripMenuItem)sender).Checked);//???
         }
         private void toolStripMenuItemShowControls_CheckedChanged(object sender, EventArgs e)
         {
@@ -186,6 +205,20 @@ namespace Clock
         private void запускатьПриСтартеWindowsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //SetStartup(запускатьПриСтартеWindowsToolStripMenuItem.Checked);
+            autoLoad = запускатьПриСтартеWindowsToolStripMenuItem.Checked;
+            //путь в реестре до автозагрузки
+            string keyName = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run";
+            using (RegistryKey key = Registry.CurrentUser.OpenSubKey(keyName, true)) 
+            {
+                if (autoLoad)
+                {
+                    key.SetValue("Clock", Application.ExecutablePath);
+                }
+                else
+                {
+                    key.DeleteValue("Clock",false);
+                }
+            }
         }
 
         private void fontDialog1_Apply(object sender, EventArgs e)

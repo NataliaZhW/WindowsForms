@@ -11,6 +11,7 @@ using System.IO;
 using System.Reflection;
 using System.Drawing.Text;
 using System.Reflection.Emit;
+using System.Diagnostics;
 
 namespace Clock
 {
@@ -27,18 +28,22 @@ namespace Clock
         {           
             string[] fonts = Directory.EnumerateFiles(Directory.GetCurrentDirectory(), "*.ttf").ToArray();
             //fonts = fonts.Where(i => i.Split('\\').Last());
+            
             for (int i = 0; i < fonts.Length; i++)
             {
                 fonts[i] = fonts[i].Split('\\').Last();
             }
-            comboBoxFonts.Items.AddRange(fonts);
+            comboBoxFonts.Items.Clear();
+
+            comboBoxFonts.Items.AddRange(fonts);          
+            
         }
 
         private void comboBoxFonts_SelectedValueChanged(object sender, EventArgs e)
         {
             PrivateFontCollection pfc = new PrivateFontCollection();  
             pfc.AddFontFile(comboBoxFonts.SelectedItem.ToString());//
-            Font font = new Font(pfc.Families[0], 22);
+            Font font = new Font(pfc.Families[0], 36);
             labelExample.Font = font;
         }
         
