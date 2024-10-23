@@ -35,16 +35,26 @@ namespace Clock
             }
             comboBoxFonts.Items.Clear();
 
-            comboBoxFonts.Items.AddRange(fonts);          
-            
+            comboBoxFonts.Items.AddRange(fonts);
+            comboBoxFonts.SelectedIndex = 0;
+
         }
 
         private void comboBoxFonts_SelectedValueChanged(object sender, EventArgs e)
         {
-            PrivateFontCollection pfc = new PrivateFontCollection();  
-            pfc.AddFontFile(comboBoxFonts.SelectedItem.ToString());//
+            string fontFile = $"{Directory.GetCurrentDirectory()}\\{comboBoxFonts.SelectedItem.ToString()}";
+            MessageBox.Show(fontFile);
+            PrivateFontCollection pfc = new PrivateFontCollection();
+            pfc.AddFontFile(fontFile);
+
             Font font = new Font(pfc.Families[0], 36);
+            //comboBoxFonts.Font = font;
             labelExample.Font = font;
+
+            //PrivateFontCollection pfc = new PrivateFontCollection();
+            //pfc.AddFontFile(comboBoxFonts.SelectedItem.ToString());//
+            //Font font = new Font(pfc.Families[0], 24);
+            //labelExample.Font = font;
         }
         
         private void btOK_Click(object sender, EventArgs e)

@@ -28,6 +28,7 @@ namespace Clock
         FontDialog fontDialog;
         bool autoLoad;
 
+
         public MainForm()
         {
             //Не работает
@@ -56,34 +57,61 @@ namespace Clock
             //{            
                 InitializeComponent();
             //}
+            SetFontDirectory();
             this.TransparencyKey = Color.Empty;
             backgroundColorDialog = new ColorDialog();//цвет шрифта
             foregroundColorDialog = new ColorDialog();//цвет фона
-
            
             choozeFontDialog = new ChoozeFont();
             fontDialog = new FontDialog();
+            LoadSettengs();
 
-            foregroundColorDialog.Color = Color.DarkSlateGray;
-            backgroundColorDialog.Color = Color.LawnGreen;// //Blue
-            labelTime.ForeColor = foregroundColorDialog.Color;
-            
+            //foregroundColorDialog.Color = Color.DarkSlateGray;
+            //backgroundColorDialog.Color = Color.LawnGreen;// //Blue
+           
             SetVisibility(false);
 
             this.Location = new Point
                 (10,//System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width - this.Width
                 10);//System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height - this.Height
             this.Text += $"{this.Location.X}x{this.Location.Y}";
-            SetFontDirectory();
             
         }
+        void LoadSettengs()
+        {
+            StreamReader sr = new StreamReader("settings.txt");
+            List<string> settengs = new List<string>();
+            while (!sr.EndOfStream)
+            {
+                settengs.Add(sr.ReadLine());
+            }
+            backgroundColorDialog.Color = Color.FromArgb(Convert.ToInt32(settengs.ToArray()[0]));
+            foregroundColorDialog.Color = Color.FromArgb(Convert.ToInt32(settengs.ToArray()[1]));
+            //sr.WriteLine(labelTime.Font.Name);
 
+            sr.Close();
+            //Process.Start("notepad", "settings.txt");
+            labelTime.BackColor = backgroundColorDialog.Color;
+            labelTime.ForeColor = foregroundColorDialog.Color;
+
+        }
+
+        void SaveSettengs()
+        {
+            StreamWriter sw = new StreamWriter("settings.txt");
+            sw.WriteLine(backgroundColorDialog.Color.ToArgb());
+            sw.WriteLine(foregroundColorDialog.Color.ToArgb());
+            sw.WriteLine(labelTime.Font.Name);
+
+            sw.Close();
+            Process.Start("notepad", "settings.txt");
+        }
         void SetFontDirectory()
         {
             string location = Assembly.GetExecutingAssembly().Location;//Получаем полный адрес исполняемого файла
             string path = Path.GetDirectoryName(location);//Из адреса извлекаем путь к файлу
             //MessageBox.Show(path);
-            Directory.SetCurrentDirectory($"{path}\\..\\..\\Fonts");//Переходим в каталог со шрифтами \\f2
+            Directory.SetCurrentDirectory($"{path}\\..\\..\\Fonts\\f2");//Переходим в каталог со шрифтами 
             //MessageBox.Show(Directory.GetCurrentDirectory());
 
         }
@@ -227,6 +255,16 @@ namespace Clock
             //{
             //    labelTime.Font = fontDialog.Font;
             //}
+        }
+
+        private void labelTime_DragDrop(object sender, DragEventArgs e)
+        {
+
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            SaveSettengs();
         }
     }
 }

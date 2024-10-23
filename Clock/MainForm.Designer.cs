@@ -64,6 +64,7 @@
             this.labelTime.Size = new System.Drawing.Size(74, 31);
             this.labelTime.TabIndex = 0;
             this.labelTime.Text = "Time";
+            this.labelTime.DragDrop += new System.Windows.Forms.DragEventHandler(this.labelTime_DragDrop);
             this.labelTime.DoubleClick += new System.EventHandler(this.labelTime_DoubleClick);
             // 
             // timer1
@@ -245,6 +246,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Clock";
             this.TransparencyKey = System.Drawing.SystemColors.Control;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.contextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
