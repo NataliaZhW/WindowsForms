@@ -86,7 +86,7 @@
             this.Controls.Add(this.btOK);
             this.Name = "ChoozeFont";
             this.Text = "Font";
-            this.Load += new System.EventHandler(this.ChoozeFont_Load);
+            //this.Load += new System.EventHandler(this.ChoozeFont_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

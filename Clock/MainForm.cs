@@ -27,73 +27,108 @@ namespace Clock
         ChoozeFont choozeFontDialog;
         FontDialog fontDialog;
         bool autoLoad;
-
+        string fontName;
+        string FontFile;
 
         public MainForm()
         {
             //Не работает
             //this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.closeToolStripMenuItem_Click); //global_FormClosed
-            
-            
+
+
             //Не работает, только выгружает
-            //bool b = false;
-            //foreach (Process process in Process.GetProcesses())
-            //{
-            //    // выводим id и имя процесса
-            //    //comboBoxFonts.Items.Add($"ID: {process.Id}  Name: {process.ProcessName}");
+            int b = 0;
+            DateTime time_p = new DateTime();
+            foreach (Process process in Process.GetProcesses())
+            {
+                // выводим id и имя процесса
+                //comboBoxFonts.Items.Add($"ID: {process.Id}  Name: {process.ProcessName}");
 
-            //    if (process.ProcessName == "Clock")
-            //    {
-            //        //process. Modules. FileName();
-            //        process.Kill();
-            //        //process.Start();
-            //        b = true;
-            //    }
+                if (process.ProcessName == "Clock")
+                {
+                    MessageBox.Show($"ID: {process.Id}  Name: {process.ProcessName}  Time: {process.StartTime}  Time: {time_p}");
+                    if (time_p < process.StartTime)
+                    {
+                        time_p = process.StartTime;//Convert.ToUInt32()
+                    }
+                    MessageBox.Show($"Time: {time_p}");
 
-            //    //Console.WriteLine($"ID: {process.Id}  Name: {process.ProcessName}");
-            //}
-
+                    //process. Modules. FileName();
+                    //process.Kill();
+                    //process.Start();
+                    b++;
+                }
+                //Console.WriteLine($"ID: {process.Id}  Name: {process.ProcessName}");
+            }
+            if (b > 1)
+            {
+                foreach (Process process in Process.GetProcesses())
+                {
+                    if (process.ProcessName == "Clock")
+                    {
+                        MessageBox.Show($"ID: {process.Id}  Name: {process.ProcessName}  Time: {process.StartTime}  Time: {time_p}");
+                        if (time_p > process.StartTime)
+                        {
+                            process.Kill();
+                        }
+                        MessageBox.Show($"Time: {time_p}");
+                    }
+                }
+            }
             //if (!b)
             //{            
-                InitializeComponent();
+            InitializeComponent();
             //}
             SetFontDirectory();
             this.TransparencyKey = Color.Empty;
             backgroundColorDialog = new ColorDialog();//цвет шрифта
             foregroundColorDialog = new ColorDialog();//цвет фона
-           
+
             choozeFontDialog = new ChoozeFont();
             fontDialog = new FontDialog();
             LoadSettengs();
 
             //foregroundColorDialog.Color = Color.DarkSlateGray;
             //backgroundColorDialog.Color = Color.LawnGreen;// //Blue
-           
+
             SetVisibility(false);
 
             this.Location = new Point
                 (10,//System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width - this.Width
                 10);//System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height - this.Height
             this.Text += $"{this.Location.X}x{this.Location.Y}";
-            
+
         }
         void LoadSettengs()
         {
             StreamReader sr = new StreamReader("settings.txt");
-            List<string> settengs = new List<string>();
-            while (!sr.EndOfStream)
+            try
             {
-                settengs.Add(sr.ReadLine());
+                List<string> settengs = new List<string>();
+                while (!sr.EndOfStream)
+                {
+                    settengs.Add(sr.ReadLine());
+                }
+                sr.Close();
+
+                backgroundColorDialog.Color = Color.FromArgb(Convert.ToInt32(settengs.ToArray()[0]));
+                foregroundColorDialog.Color = Color.FromArgb(Convert.ToInt32(settengs.ToArray()[1]));
+                //sr.WriteLine(labelTime.);
+
+                //Process.Start("notepad", "settings.txt");
+                FontFile = settengs.ToArray()[2];
+                topmostToolStripMenuItem.Checked = bool.Parse(settengs.ToArray()[3]);
+                toolStripMenuItemShowDate.Checked = bool.Parse(settengs.ToArray()[4]); ;
+                //MessageBox.Show(fontName);
+                labelTime.Font = choozeFontDialog.SetFontFile(FontFile);
+                labelTime.BackColor = backgroundColorDialog.Color;
+                labelTime.ForeColor = foregroundColorDialog.Color;
             }
-            backgroundColorDialog.Color = Color.FromArgb(Convert.ToInt32(settengs.ToArray()[0]));
-            foregroundColorDialog.Color = Color.FromArgb(Convert.ToInt32(settengs.ToArray()[1]));
-            //sr.WriteLine(labelTime.Font.Name);
-
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Load settings error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             sr.Close();
-            //Process.Start("notepad", "settings.txt");
-            labelTime.BackColor = backgroundColorDialog.Color;
-            labelTime.ForeColor = foregroundColorDialog.Color;
-
         }
 
         void SaveSettengs()
@@ -101,7 +136,11 @@ namespace Clock
             StreamWriter sw = new StreamWriter("settings.txt");
             sw.WriteLine(backgroundColorDialog.Color.ToArgb());
             sw.WriteLine(foregroundColorDialog.Color.ToArgb());
-            sw.WriteLine(labelTime.Font.Name);
+
+            sw.WriteLine(choozeFontDialog.FontFile.Split('\\').Last());// //labelTime.Font.Name
+            sw.WriteLine(topmostToolStripMenuItem.Checked);
+            sw.WriteLine(toolStripMenuItemShowDate.Checked);
+
 
             sw.Close();
             Process.Start("notepad", "settings.txt");
@@ -142,14 +181,14 @@ namespace Clock
             cbShowDate.Visible = visible;//дата
             btnHideControls.Visible = visible;//скрыть
             // Visible - видимость 
-            labelTime.ForeColor =  backgroundColorDialog.Color;//цвет шрифта? 
-            labelTime.BackColor =  foregroundColorDialog.Color;//цвет фона? Color.LightGoldenrodYellow
+            labelTime.ForeColor = backgroundColorDialog.Color;//цвет шрифта? 
+            labelTime.BackColor = foregroundColorDialog.Color;//цвет фона? Color.LightGoldenrodYellow
             //labelTime.ForeColor = visible ? Color.Empty : backgroundColorDialog.Color;//цвет шрифта? 
             //labelTime.BackColor = visible ? Color.Empty : foregroundColorDialog.Color;//цвет фона? Color.LightGoldenrodYellow
         }
 
         private void btnHideControls_Click(object sender, EventArgs e)
-        {           
+        {
             //SetVisibility(false);
 
             toolStripMenuItemShowControls.Checked = false;
@@ -158,8 +197,8 @@ namespace Clock
         }
 
         private void labelTime_DoubleClick(object sender, EventArgs e)
-        {       
-        //SetVisibility(true);            
+        {
+            //SetVisibility(true);            
             //поверхВсехОконToolStripMenuItem.Checked = (поверхВсехОконToolStripMenuItem.Checked == false) ? true : false;
             toolStripMenuItemShowControls.Checked = true;
         }
@@ -185,7 +224,7 @@ namespace Clock
         }
 
         private void toolStripMenuItemShowControls_Click(object sender, EventArgs e)
-        {            
+        {
             SetVisibility(((ToolStripMenuItem)sender).Checked);//???
         }
         private void toolStripMenuItemShowControls_CheckedChanged(object sender, EventArgs e)
@@ -236,7 +275,7 @@ namespace Clock
             autoLoad = запускатьПриСтартеWindowsToolStripMenuItem.Checked;
             //путь в реестре до автозагрузки
             string keyName = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run";
-            using (RegistryKey key = Registry.CurrentUser.OpenSubKey(keyName, true)) 
+            using (RegistryKey key = Registry.CurrentUser.OpenSubKey(keyName, true))
             {
                 if (autoLoad)
                 {
@@ -244,7 +283,7 @@ namespace Clock
                 }
                 else
                 {
-                    key.DeleteValue("Clock",false);
+                    key.DeleteValue("Clock", false);
                 }
             }
         }
@@ -265,6 +304,11 @@ namespace Clock
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             SaveSettengs();
+        }
+
+        private void toolStripMenuItemShowDate_CheckedChanged(object sender, EventArgs e)
+        {
+            cbShowDate.Checked = ((ToolStripMenuItem)sender).Checked;
         }
     }
 }

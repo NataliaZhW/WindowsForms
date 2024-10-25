@@ -131,6 +131,7 @@
             this.topmostToolStripMenuItem.Name = "topmostToolStripMenuItem";
             this.topmostToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
             this.topmostToolStripMenuItem.Text = "Поверх всех окон";
+            this.topmostToolStripMenuItem.CheckedChanged += new System.EventHandler(this.topmostToolStripMenuItem_CheckedChanged);
             this.topmostToolStripMenuItem.Click += new System.EventHandler(this.topmostToolStripMenuItem_CheckedChanged);
             // 
             // toolStripMenuItemShowControls
@@ -153,6 +154,7 @@
             this.toolStripMenuItemShowDate.Name = "toolStripMenuItemShowDate";
             this.toolStripMenuItemShowDate.Size = new System.Drawing.Size(250, 22);
             this.toolStripMenuItemShowDate.Text = "Показать дату";
+            this.toolStripMenuItemShowDate.CheckedChanged += new System.EventHandler(this.toolStripMenuItemShowDate_CheckedChanged);
             this.toolStripMenuItemShowDate.Click += new System.EventHandler(this.showDateToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
