@@ -46,12 +46,12 @@ namespace Clock
 
                 if (process.ProcessName == "Clock")
                 {
-                    MessageBox.Show($"ID: {process.Id}  Name: {process.ProcessName}  Time: {process.StartTime}  Time: {time_p}");
+                    //MessageBox.Show($"ID: {process.Id}  Name: {process.ProcessName}  Time: {process.StartTime}  Time: {time_p}");
                     if (time_p < process.StartTime)
                     {
                         time_p = process.StartTime;//Convert.ToUInt32()
                     }
-                    MessageBox.Show($"Time: {time_p}");
+                    //MessageBox.Show($"Time: {time_p}");
 
                     //process. Modules. FileName();
                     //process.Kill();
@@ -66,12 +66,12 @@ namespace Clock
                 {
                     if (process.ProcessName == "Clock")
                     {
-                        MessageBox.Show($"ID: {process.Id}  Name: {process.ProcessName}  Time: {process.StartTime}  Time: {time_p}");
+                        //MessageBox.Show($"ID: {process.Id}  Name: {process.ProcessName}  Time: {process.StartTime}  Time: {time_p}");
                         if (time_p > process.StartTime)
                         {
                             process.Kill();
                         }
-                        MessageBox.Show($"Time: {time_p}");
+                        //MessageBox.Show($"Time: {time_p}");
                     }
                 }
             }
@@ -119,6 +119,14 @@ namespace Clock
                 FontFile = settengs.ToArray()[2];
                 topmostToolStripMenuItem.Checked = bool.Parse(settengs.ToArray()[3]);
                 toolStripMenuItemShowDate.Checked = bool.Parse(settengs.ToArray()[4]); ;
+                                
+                //запускатьПриСтартеWindowsToolStripMenuItem.Checked = bool.Parse(settengs.ToArray()[5]); ;
+                RegistryKey rk = Registry.CurrentUser.OpenSubKey(
+          "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+                object run = rk.GetValue("Clock");
+                if (run != null) запускатьПриСтартеWindowsToolStripMenuItem.Checked = true;
+                rk.Dispose();
+
                 //MessageBox.Show(fontName);
                 labelTime.Font = choozeFontDialog.SetFontFile(FontFile);
                 labelTime.BackColor = backgroundColorDialog.Color;
@@ -140,6 +148,7 @@ namespace Clock
             sw.WriteLine(choozeFontDialog.FontFile.Split('\\').Last());// //labelTime.Font.Name
             sw.WriteLine(topmostToolStripMenuItem.Checked);
             sw.WriteLine(toolStripMenuItemShowDate.Checked);
+            sw.WriteLine(запускатьПриСтартеWindowsToolStripMenuItem.Checked);
 
 
             sw.Close();
@@ -309,6 +318,40 @@ namespace Clock
         private void toolStripMenuItemShowDate_CheckedChanged(object sender, EventArgs e)
         {
             cbShowDate.Checked = ((ToolStripMenuItem)sender).Checked;
+        }
+
+        private void запускатьПриСтартеWindowsToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            ////SetStartup(запускатьПриСтартеWindowsToolStripMenuItem.Checked);
+            //autoLoad = запускатьПриСтартеWindowsToolStripMenuItem.Checked;
+            ////путь в реестре до автозагрузки
+            //string keyName = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run";
+
+            //using (RegistryKey key = Registry.CurrentUser.OpenSubKey(keyName, true))
+            //{
+            //    if (autoLoad)
+            //    {
+            //        key.SetValue("Clock", Application.ExecutablePath);
+            //    }
+            //    else
+            //    {
+            //        key.DeleteValue("Clock", false);
+            //    }
+            //} //????key.Dispose();
+
+
+
+            RegistryKey rk = Registry.CurrentUser.OpenSubKey(
+                "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+            if (запускатьПриСтартеWindowsToolStripMenuItem.Checked)
+            {
+                rk.SetValue("Clock", Application.ExecutablePath);
+            }
+            else
+            {
+                rk.DeleteValue("Clock", false);// не бросать исключение если запись отсутствует
+            }
+            rk.Dispose();
         }
     }
 }

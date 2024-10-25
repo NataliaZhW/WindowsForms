@@ -123,7 +123,7 @@
             this.toolStripSeparator4,
             this.closeToolStripMenuItem});
             this.contextMenuStrip.Name = "contextMenuStrip1";
-            this.contextMenuStrip.Size = new System.Drawing.Size(251, 182);
+            this.contextMenuStrip.Size = new System.Drawing.Size(251, 204);
             // 
             // topmostToolStripMenuItem
             // 
@@ -204,6 +204,7 @@
             this.запускатьПриСтартеWindowsToolStripMenuItem.Name = "запускатьПриСтартеWindowsToolStripMenuItem";
             this.запускатьПриСтартеWindowsToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
             this.запускатьПриСтартеWindowsToolStripMenuItem.Text = "Запускать при старте Windows";
+            this.запускатьПриСтартеWindowsToolStripMenuItem.CheckedChanged += new System.EventHandler(this.запускатьПриСтартеWindowsToolStripMenuItem_CheckedChanged);
             this.запускатьПриСтартеWindowsToolStripMenuItem.Click += new System.EventHandler(this.запускатьПриСтартеWindowsToolStripMenuItem_Click);
             // 
             // toolStripSeparator4
