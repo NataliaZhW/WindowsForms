@@ -23,13 +23,63 @@ namespace Clock
             labelFilename.MaximumSize = new Size(this.Width - 25, 75);
             //alarm = new Alarm();
             openFileDialogSound.Filter = "MP-3 (*.mp3)|*.mp3|Flac (*.flac)|*.flac|All Audio|*.mp3;*.flac";
+            openFileDialogSound.FilterIndex = 3;
 
+        }
+        public AddAlarm(Alarm alarm) : this()
+        {
+            Alarm = alarm;
+            InitWindowFromAlarm();
+            //InitializeComponent();
+            //Alarm = new Alarm();
+            ////labelFilename.SetBounds(labelFilename.Location.X, labelFilename.Location.Y, this.Width - 10, 75);
+            ////labelFilename.MaximumSize = new Size(this,Midth - 10, 75);
+            //labelFilename.MaximumSize = new Size(this.Width - 25, 75);
+            ////alarm = new Alarm();
+            //openFileDialogSound.Filter = "MP-3 (*.mp3)|*.mp3|Flac (*.flac)|*.flac|All Audio|*.mp3;*.flac";
+
+        }
+        //public AddAlarm(string stralarm) //: this()
+        //{
+        //    InitializeComponent();
+        //    string[] comps = stralarm.Split(',');
+        //    if (comps[0].Contains('/'))
+        //    {
+        //        checkBoxExectDate.Checked = true;
+        //        dateTimePickerDate.Text = comps[0];
+        //        dateTimePickerTime.Text = comps[1];
+        //    }
+        //    else
+        //    {
+        //        checkBoxExectDate.Checked = false;
+        //        dateTimePickerTime.Text = comps[0];
+        //        for (int i = 1; i < comps.Length; ++i)
+        //            if (Alarm.WeekDayNames.Contains(comps[i].Remove(0, 1)))
+        //                checkedListBoxWeek.SetItemChecked(Array.IndexOf(Alarm.WeekDayNames, comps[i].Remove(0, 1)), true);
+        //    }
+        //    FileNameSound.Text = comps.Last();
+        //    ChooseOkB.Enabled = false;
+        //}
+        void InitWindowFromAlarm()
+        {
+            if (Alarm.Date!=DateTime.MinValue) this.dateTimePickerDate.Value = Alarm.Date;
+            this.dateTimePickerTime.Value = Alarm.Time;
+            this.labelFilename.Text = Alarm.Filename;
+            for (int i = 0; i < Alarm.Weekdays.Length; i++)
+            {
+                checkedListBoxWeek.SetItemChecked(i, Alarm.Weekdays[i]);
+                //(checkedListBoxWeek.Items[i] as CheckBox).Checked = Alarm.Weekdays[i];
+            }
         }
         void InitAlarm()
         {
             Alarm.Date = dateTimePickerDate.Enabled ? dateTimePickerDate.Value : DateTime.MinValue;            
             Alarm.Time = dateTimePickerTime.Value;
             Alarm.Filename = labelFilename.Text;
+            for (int i = 0; i < Alarm.Weekdays.Length; i++) Alarm.Weekdays[i] = false;
+            {
+                
+            }
             for (int i = 0; i < checkedListBoxWeek.CheckedIndices.Count; i++)//checkedListBoxWeek.Items[i]
             {
                 //Свойство 'CheckedIndices' - это коллекция, которая содержит индексы выбраннх Галочек в checkedListBox.

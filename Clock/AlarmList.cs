@@ -12,20 +12,35 @@ namespace Clock
 {
     public partial class AlarmList : Form
     {
-        
+
         public AlarmList()
         {
-            InitializeComponent();            
+            InitializeComponent();
         }
-        
+
         private void btAddAlarm_Click(object sender, EventArgs e)
         {
             AddAlarm addAlarm = new AddAlarm();
             //;
-            if (addAlarm.ShowDialog(this)==DialogResult.OK)
+            if (addAlarm.ShowDialog(this) == DialogResult.OK)
             {
                 listBoxAlarms.Items.Add(addAlarm.Alarm);//
             }
+        }
+
+        private void listBoxAlarms_DoubleClick(object sender, EventArgs e)
+        {
+            AddAlarm addAlarm = new AddAlarm((sender as ListBox).SelectedItem as Alarm);
+            if (addAlarm.ShowDialog(this) == DialogResult.OK)
+            {
+                listBoxAlarms.SelectedItem = addAlarm.Alarm;
+                listBoxAlarms.Items[listBoxAlarms.SelectedIndex] = listBoxAlarms.Items[listBoxAlarms.SelectedIndex];
+            };
+            //if (ListBoxAlarms.SelectedItem != null)
+            //{
+            //    AddAlarms Addalarm = new AddAlarms(ListBoxAlarms.SelectedItem.ToString());
+            //    Addalarm.ShowDialog(this);
+            //}
         }
     }
 }

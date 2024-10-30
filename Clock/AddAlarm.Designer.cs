@@ -64,7 +64,7 @@
             // btCooseFile
             // 
             this.btCooseFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btCooseFile.Location = new System.Drawing.Point(13, 153);
+            this.btCooseFile.Location = new System.Drawing.Point(16, 259);
             this.btCooseFile.Name = "btCooseFile";
             this.btCooseFile.Size = new System.Drawing.Size(125, 23);
             this.btCooseFile.TabIndex = 3;
@@ -76,7 +76,7 @@
             // 
             this.btOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btOK.Enabled = false;
-            this.btOK.Location = new System.Drawing.Point(210, 153);
+            this.btOK.Location = new System.Drawing.Point(213, 259);
             this.btOK.Name = "btOK";
             this.btOK.Size = new System.Drawing.Size(75, 23);
             this.btOK.TabIndex = 4;
@@ -87,7 +87,7 @@
             // btCooseCancel
             // 
             this.btCooseCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btCooseCancel.Location = new System.Drawing.Point(291, 153);
+            this.btCooseCancel.Location = new System.Drawing.Point(294, 259);
             this.btCooseCancel.Name = "btCooseCancel";
             this.btCooseCancel.Size = new System.Drawing.Size(75, 23);
             this.btCooseCancel.TabIndex = 5;
@@ -123,7 +123,7 @@
             this.checkedListBoxWeek.FormattingEnabled = true;
             this.checkedListBoxWeek.Items.AddRange(new object[] {
             "Пн",
-            "Пт",
+            "Вт",
             "Ср",
             "Чт",
             "Пт",
@@ -143,7 +143,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(388, 184);
+            this.ClientSize = new System.Drawing.Size(392, 294);
             this.Controls.Add(this.checkedListBoxWeek);
             this.Controls.Add(this.checkBoxExectDate);
             this.Controls.Add(this.dateTimePickerDate);
