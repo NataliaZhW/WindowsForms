@@ -45,14 +45,14 @@
             this.цветФонаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.цветШрифтаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.выбратьШрифтToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.будильникиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.запускатьПриСтартеWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.выбратьШрифтToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fontDialog1 = new System.Windows.Forms.FontDialog();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.будильникиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -61,13 +61,15 @@
             this.labelTime.AutoSize = true;
             this.labelTime.BackColor = System.Drawing.SystemColors.Control;
             this.labelTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelTime.Location = new System.Drawing.Point(12, 50);
+            this.labelTime.Location = new System.Drawing.Point(12, 9);
             this.labelTime.Name = "labelTime";
             this.labelTime.Size = new System.Drawing.Size(74, 31);
             this.labelTime.TabIndex = 0;
             this.labelTime.Text = "Time";
-            this.labelTime.DragDrop += new System.Windows.Forms.DragEventHandler(this.labelTime_DragDrop);
             this.labelTime.DoubleClick += new System.EventHandler(this.labelTime_DoubleClick);
+            this.labelTime.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.labelTime_MouseDoubleClick);
+            this.labelTime.MouseDown += new System.Windows.Forms.MouseEventHandler(this.labelTime_MouseDown);
+            this.labelTime.MouseMove += new System.Windows.Forms.MouseEventHandler(this.labelTime_MouseMove);
             // 
             // timer1
             // 
@@ -127,7 +129,7 @@
             this.toolStripSeparator4,
             this.closeToolStripMenuItem});
             this.contextMenuStrip.Name = "contextMenuStrip1";
-            this.contextMenuStrip.Size = new System.Drawing.Size(251, 232);
+            this.contextMenuStrip.Size = new System.Drawing.Size(251, 210);
             // 
             // topmostToolStripMenuItem
             // 
@@ -196,6 +198,18 @@
             this.выбратьШрифтToolStripMenuItem1.Text = "Выбрать шрифт";
             this.выбратьШрифтToolStripMenuItem1.Click += new System.EventHandler(this.выбратьШрифтToolStripMenuItem1_Click);
             // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(247, 6);
+            // 
+            // будильникиToolStripMenuItem
+            // 
+            this.будильникиToolStripMenuItem.Name = "будильникиToolStripMenuItem";
+            this.будильникиToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
+            this.будильникиToolStripMenuItem.Text = "Будильники";
+            this.будильникиToolStripMenuItem.Click += new System.EventHandler(this.будильникиToolStripMenuItem_Click);
+            // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
@@ -233,18 +247,6 @@
             // 
             this.fontDialog1.ShowEffects = false;
             this.fontDialog1.Apply += new System.EventHandler(this.fontDialog1_Apply);
-            // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(247, 6);
-            // 
-            // будильникиToolStripMenuItem
-            // 
-            this.будильникиToolStripMenuItem.Name = "будильникиToolStripMenuItem";
-            this.будильникиToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
-            this.будильникиToolStripMenuItem.Text = "Будильники";
-            this.будильникиToolStripMenuItem.Click += new System.EventHandler(this.будильникиToolStripMenuItem_Click);
             // 
             // MainForm
             // 

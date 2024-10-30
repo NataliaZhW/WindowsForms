@@ -80,7 +80,7 @@ namespace Clock
             //{            
             InitializeComponent();
             //}
-            AllocConsole();//????
+            //AllocConsole();//????
             SetFontDirectory();
             this.TransparencyKey = Color.Empty;
             backgroundColorDialog = new ColorDialog();//цвет шрифта
@@ -308,11 +308,7 @@ namespace Clock
             //    labelTime.Font = fontDialog.Font;
             //}
         }
-
-        private void labelTime_DragDrop(object sender, DragEventArgs e)
-        {
-
-        }
+              
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -365,5 +361,40 @@ namespace Clock
 
         [DllImport("kernel32.dll")]
         static extern bool AllocConsole();
+
+        
+        private void labelTime_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            toolStripMenuItemShowControls.Checked = true;
+        }
+
+        private void labelTime_MouseEnter(object sender, EventArgs e)
+        {
+
+        }
+        private void labelTime_MouseLeave(object sender, EventArgs e)
+        {
+            labelTime.Cursor = Cursors.Default;
+        }
+
+        Point lastPoint;
+        private void labelTime_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                this.Left += e.X - lastPoint.X;
+                this.Top += e.Y - lastPoint.Y;
+            }
+        }
+       
+        private void labelTime_MouseDown(object sender, MouseEventArgs e)
+        {
+            lastPoint = new Point(e.X, e.Y);
+            //labelTime.Capture = false;
+            ////подменяет значение для системы о зажатии левой кнопки мыши
+            //Message n = Message.Create(this.Handle, 0xa1, new IntPtr(2), IntPtr.Zero);
+            //this.WndProc(ref n);
+        }
+
     }
 }

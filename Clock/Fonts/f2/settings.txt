@@ -2,5 +2,5 @@
 -4144960
 Bombing.ttf
 True
-True
+False
 True
