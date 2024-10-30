@@ -39,19 +39,21 @@ namespace Clock
             pfc.AddFontFile(FontFile);
             return new Font(pfc.Families[0],36);
         }
-        //
-        //private void ChoozeFont_Load(object sender, EventArgs e)
+       
         void LoadFonts()
-        {           
+        {
+            //1) Получаем список всех файлов в текущем каталоге, и сохраняем этот список в массив 'fonts':
             string[] fonts = Directory.EnumerateFiles(Directory.GetCurrentDirectory(), "*.ttf").ToArray();
             //fonts = fonts.Where(i => i.Split('\\').Last());
-            
+
+            //2) Поскольку в массиве хранятся полные пути к файлам, убираем пути, и оставляем только имена полученный файлов:
             for (int i = 0; i < fonts.Length; i++)
             {
                 fonts[i] = fonts[i].Split('\\').Last();
             }
             comboBoxFonts.Items.Clear();
 
+            //3) Загружаем весь массив файлов в ComboBox:
             comboBoxFonts.Items.AddRange(fonts);
             comboBoxFonts.SelectedIndex = 0;
 

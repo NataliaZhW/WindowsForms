@@ -51,6 +51,8 @@
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.выбратьШрифтToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fontDialog1 = new System.Windows.Forms.FontDialog();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.будильникиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -118,12 +120,14 @@
             this.toolStripSeparator2,
             this.выборЦветаToolStripMenuItem,
             this.выбратьШрифтToolStripMenuItem1,
+            this.toolStripSeparator5,
+            this.будильникиToolStripMenuItem,
             this.toolStripSeparator3,
             this.запускатьПриСтартеWindowsToolStripMenuItem,
             this.toolStripSeparator4,
             this.closeToolStripMenuItem});
             this.contextMenuStrip.Name = "contextMenuStrip1";
-            this.contextMenuStrip.Size = new System.Drawing.Size(251, 204);
+            this.contextMenuStrip.Size = new System.Drawing.Size(251, 232);
             // 
             // topmostToolStripMenuItem
             // 
@@ -230,6 +234,18 @@
             this.fontDialog1.ShowEffects = false;
             this.fontDialog1.Apply += new System.EventHandler(this.fontDialog1_Apply);
             // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(247, 6);
+            // 
+            // будильникиToolStripMenuItem
+            // 
+            this.будильникиToolStripMenuItem.Name = "будильникиToolStripMenuItem";
+            this.будильникиToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
+            this.будильникиToolStripMenuItem.Text = "Будильники";
+            this.будильникиToolStripMenuItem.Click += new System.EventHandler(this.будильникиToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -279,6 +295,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
         private System.Windows.Forms.FontDialog fontDialog1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripMenuItem будильникиToolStripMenuItem;
     }
 }
 

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChoozeFont));
             this.btOK = new System.Windows.Forms.Button();
             this.btCancel = new System.Windows.Forms.Button();
             this.comboBoxFonts = new System.Windows.Forms.ComboBox();
@@ -84,9 +85,9 @@
             this.Controls.Add(this.comboBoxFonts);
             this.Controls.Add(this.btCancel);
             this.Controls.Add(this.btOK);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ChoozeFont";
             this.Text = "Font";
-            //this.Load += new System.EventHandler(this.ChoozeFont_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

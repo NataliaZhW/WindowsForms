@@ -25,10 +25,11 @@ namespace Clock
         ColorDialog backgroundColorDialog;
         ColorDialog foregroundColorDialog;
         ChoozeFont choozeFontDialog;
+        AlarmList alarmList;
         FontDialog fontDialog;
         bool autoLoad;
         string fontName;
-        string FontFile;
+        string FontFile { get; set; }        
 
         public MainForm()
         {
@@ -36,7 +37,7 @@ namespace Clock
             //this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.closeToolStripMenuItem_Click); //global_FormClosed
 
 
-            //Не работает, только выгружает
+            //работает, выгружает
             int b = 0;
             DateTime time_p = new DateTime();
             foreach (Process process in Process.GetProcesses())
@@ -79,6 +80,7 @@ namespace Clock
             //{            
             InitializeComponent();
             //}
+            AllocConsole();//????
             SetFontDirectory();
             this.TransparencyKey = Color.Empty;
             backgroundColorDialog = new ColorDialog();//цвет шрифта
@@ -87,6 +89,7 @@ namespace Clock
             choozeFontDialog = new ChoozeFont();
             fontDialog = new FontDialog();
             LoadSettengs();
+            alarmList = new AlarmList();
 
             //foregroundColorDialog.Color = Color.DarkSlateGray;
             //backgroundColorDialog.Color = Color.LawnGreen;// //Blue
@@ -99,6 +102,17 @@ namespace Clock
             this.Text += $"{this.Location.X}x{this.Location.Y}";
 
         }
+        void SetFontDirectory()
+        {
+            string location = Assembly.GetExecutingAssembly().Location;//Получаем полный адрес исполняемого файла
+            string path = Path.GetDirectoryName(location);//Из адреса извлекаем путь к файлу
+            //MessageBox.Show(path);
+            Directory.SetCurrentDirectory($"{path}\\..\\..\\Fonts\\f2");//Переходим в каталог со шрифтами 
+            //MessageBox.Show(Directory.GetCurrentDirectory());
+
+        }
+
+
         void LoadSettengs()
         {
             StreamReader sr = new StreamReader("settings.txt");
@@ -119,18 +133,18 @@ namespace Clock
                 FontFile = settengs.ToArray()[2];
                 topmostToolStripMenuItem.Checked = bool.Parse(settengs.ToArray()[3]);
                 toolStripMenuItemShowDate.Checked = bool.Parse(settengs.ToArray()[4]); ;
-                                
-                //запускатьПриСтартеWindowsToolStripMenuItem.Checked = bool.Parse(settengs.ToArray()[5]); ;
+
+                //MessageBox.Show(fontName);
+                labelTime.Font = choozeFontDialog.SetFontFile(FontFile);
+                labelTime.ForeColor = foregroundColorDialog.Color;
+                labelTime.BackColor = backgroundColorDialog.Color;
+                
                 RegistryKey rk = Registry.CurrentUser.OpenSubKey(
-          "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+                             "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
                 object run = rk.GetValue("Clock");
                 if (run != null) запускатьПриСтартеWindowsToolStripMenuItem.Checked = true;
                 rk.Dispose();
 
-                //MessageBox.Show(fontName);
-                labelTime.Font = choozeFontDialog.SetFontFile(FontFile);
-                labelTime.BackColor = backgroundColorDialog.Color;
-                labelTime.ForeColor = foregroundColorDialog.Color;
             }
             catch (Exception ex)
             {
@@ -150,18 +164,8 @@ namespace Clock
             sw.WriteLine(toolStripMenuItemShowDate.Checked);
             sw.WriteLine(запускатьПриСтартеWindowsToolStripMenuItem.Checked);
 
-
             sw.Close();
-            Process.Start("notepad", "settings.txt");
-        }
-        void SetFontDirectory()
-        {
-            string location = Assembly.GetExecutingAssembly().Location;//Получаем полный адрес исполняемого файла
-            string path = Path.GetDirectoryName(location);//Из адреса извлекаем путь к файлу
-            //MessageBox.Show(path);
-            Directory.SetCurrentDirectory($"{path}\\..\\..\\Fonts\\f2");//Переходим в каталог со шрифтами 
-            //MessageBox.Show(Directory.GetCurrentDirectory());
-
+            //Process.Start("notepad", "settings.txt");
         }
 
         //void SetStartup(bool autostart = false)
@@ -221,16 +225,16 @@ namespace Clock
         {
             this.Close();
         }
+        private void topmostToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            this.TopMost = topmostToolStripMenuItem.Checked;
+        }
 
         private void showDateToolStripMenuItem_Click(object sender, EventArgs e)
         {
             cbShowDate.Checked = ((ToolStripMenuItem)sender).Checked;
         }
 
-        private void topmostToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
-        {
-            this.TopMost = topmostToolStripMenuItem.Checked;
-        }
 
         private void toolStripMenuItemShowControls_Click(object sender, EventArgs e)
         {
@@ -353,5 +357,13 @@ namespace Clock
             }
             rk.Dispose();
         }
+
+        private void будильникиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            alarmList.ShowDialog(this);
+        }
+
+        [DllImport("kernel32.dll")]
+        static extern bool AllocConsole();
     }
 }
