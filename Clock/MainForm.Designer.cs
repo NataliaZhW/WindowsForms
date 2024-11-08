@@ -53,7 +53,10 @@
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.выбратьШрифтToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fontDialog1 = new System.Windows.Forms.FontDialog();
+            this.showWeekdayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.axWindowsMediaPlayer = new AxWMPLib.AxWindowsMediaPlayer();
             this.contextMenuStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer)).BeginInit();
             this.SuspendLayout();
             // 
             // labelTime
@@ -82,7 +85,7 @@
             this.cbShowDate.AutoSize = true;
             this.cbShowDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cbShowDate.ForeColor = System.Drawing.SystemColors.Desktop;
-            this.cbShowDate.Location = new System.Drawing.Point(12, 124);
+            this.cbShowDate.Location = new System.Drawing.Point(11, 86);
             this.cbShowDate.Name = "cbShowDate";
             this.cbShowDate.Size = new System.Drawing.Size(176, 29);
             this.cbShowDate.TabIndex = 1;
@@ -94,9 +97,9 @@
             this.btnHideControls.BackColor = System.Drawing.SystemColors.Control;
             this.btnHideControls.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btnHideControls.ForeColor = System.Drawing.SystemColors.Desktop;
-            this.btnHideControls.Location = new System.Drawing.Point(12, 159);
+            this.btnHideControls.Location = new System.Drawing.Point(11, 121);
             this.btnHideControls.Name = "btnHideControls";
-            this.btnHideControls.Size = new System.Drawing.Size(176, 40);
+            this.btnHideControls.Size = new System.Drawing.Size(200, 26);
             this.btnHideControls.TabIndex = 2;
             this.btnHideControls.Text = "Скрыть элементы управления";
             this.btnHideControls.UseVisualStyleBackColor = false;
@@ -119,6 +122,7 @@
             this.toolStripMenuItemShowControls,
             this.toolStripSeparator1,
             this.toolStripMenuItemShowDate,
+            this.showWeekdayToolStripMenuItem,
             this.toolStripSeparator2,
             this.выборЦветаToolStripMenuItem,
             this.выбратьШрифтToolStripMenuItem1,
@@ -129,7 +133,7 @@
             this.toolStripSeparator4,
             this.closeToolStripMenuItem});
             this.contextMenuStrip.Name = "contextMenuStrip1";
-            this.contextMenuStrip.Size = new System.Drawing.Size(251, 210);
+            this.contextMenuStrip.Size = new System.Drawing.Size(251, 232);
             // 
             // topmostToolStripMenuItem
             // 
@@ -248,6 +252,25 @@
             this.fontDialog1.ShowEffects = false;
             this.fontDialog1.Apply += new System.EventHandler(this.fontDialog1_Apply);
             // 
+            // showWeekdayToolStripMenuItem
+            // 
+            this.showWeekdayToolStripMenuItem.CheckOnClick = true;
+            this.showWeekdayToolStripMenuItem.Name = "showWeekdayToolStripMenuItem";
+            this.showWeekdayToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
+            this.showWeekdayToolStripMenuItem.Text = "Show Weekday";
+            // 
+            // axWindowsMediaPlayer1
+            // 
+            this.axWindowsMediaPlayer.Enabled = true;
+            this.axWindowsMediaPlayer.Location = new System.Drawing.Point(11, 153);
+            this.axWindowsMediaPlayer.Name = "axWindowsMediaPlayer1";
+            this.axWindowsMediaPlayer.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axWindowsMediaPlayer1.OcxState")));
+            this.axWindowsMediaPlayer.Size = new System.Drawing.Size(201, 47);
+            this.axWindowsMediaPlayer.TabIndex = 3;
+            this.axWindowsMediaPlayer.EndOfStream += new AxWMPLib._WMPOCXEvents_EndOfStreamEventHandler(this.SetPlayerInvisible);
+            //this.axWindowsMediaPlayer.PlayStateChange += new AxWMPLib._WMPOCXEvents_PlayStateChangeEventHandler(this.SetPlayerInvisible);
+            
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -255,6 +278,7 @@
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(224, 211);
             this.ContextMenuStrip = this.contextMenuStrip;
+            this.Controls.Add(this.axWindowsMediaPlayer);
             this.Controls.Add(this.btnHideControls);
             this.Controls.Add(this.cbShowDate);
             this.Controls.Add(this.labelTime);
@@ -269,6 +293,7 @@
             this.TransparencyKey = System.Drawing.SystemColors.Control;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.contextMenuStrip.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -299,6 +324,8 @@
         private System.Windows.Forms.FontDialog fontDialog1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem будильникиToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem showWeekdayToolStripMenuItem;
+        private AxWMPLib.AxWindowsMediaPlayer axWindowsMediaPlayer;
     }
 }
 

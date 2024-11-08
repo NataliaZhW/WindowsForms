@@ -1,6 +1,6 @@
 -16760768
 -4144960
 Bombing.ttf
-True
 False
+True
 True

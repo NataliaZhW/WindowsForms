@@ -62,12 +62,13 @@
             this.btDelAlarm.TabIndex = 2;
             this.btDelAlarm.Text = "Удалить";
             this.btDelAlarm.UseVisualStyleBackColor = true;
+            this.btDelAlarm.Click += new System.EventHandler(this.btDelAlarm_Click);
             // 
             // AlarmList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(445, 302);
+            this.ClientSize = new System.Drawing.Size(440, 144);
             this.Controls.Add(this.btDelAlarm);
             this.Controls.Add(this.btAddAlarm);
             this.Controls.Add(this.listBoxAlarms);

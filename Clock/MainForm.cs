@@ -15,6 +15,7 @@ using System.Reflection;
 using Microsoft.Win32;
 using System.Diagnostics;
 using System.Threading;
+using AxWMPLib;
 
 
 namespace Clock
@@ -26,10 +27,12 @@ namespace Clock
         ColorDialog foregroundColorDialog;
         ChoozeFont choozeFontDialog;
         AlarmList alarmList;
+        Alarm alarm;
+
         FontDialog fontDialog;
         bool autoLoad;
         string fontName;
-        string FontFile { get; set; }        
+        string FontFile { get; set; }
 
         public MainForm()
         {
@@ -80,7 +83,7 @@ namespace Clock
             //{            
             InitializeComponent();
             //}
-            //AllocConsole();//????
+            AllocConsole();//????
             SetFontDirectory();
             this.TransparencyKey = Color.Empty;
             backgroundColorDialog = new ColorDialog();//цвет шрифта
@@ -100,6 +103,10 @@ namespace Clock
                 (10,//System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width - this.Width
                 10);//System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height - this.Height
             this.Text += $"{this.Location.X}x{this.Location.Y}";
+
+            alarm = new Alarm();
+            GetNextaLarm();
+            //this.axWindowsMediaPlayer1.Visible = false;
 
         }
         void SetFontDirectory()
@@ -138,7 +145,7 @@ namespace Clock
                 labelTime.Font = choozeFontDialog.SetFontFile(FontFile);
                 labelTime.ForeColor = foregroundColorDialog.Color;
                 labelTime.BackColor = backgroundColorDialog.Color;
-                
+
                 RegistryKey rk = Registry.CurrentUser.OpenSubKey(
                              "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
                 object run = rk.GetValue("Clock");
@@ -176,6 +183,17 @@ namespace Clock
         //    rk.Dispose();
         //}
 
+        void GetNextaLarm()
+        {
+            List<Alarm> alarms = new List<Alarm>();
+            foreach (Alarm item in alarmList.ListBoxAlarms.Items)
+            {
+                if (item.Time > DateTime.Now) alarms.Add(item);
+            }
+            if (alarms.Min() != null) alarm = alarms.Min();
+            Console.WriteLine(alarm);//.ToString()            
+        }
+        
         private void timer1_Tick(object sender, EventArgs e)
         {
             labelTime.Text = DateTime.Now.ToString("HH:mm:ss");
@@ -183,9 +201,39 @@ namespace Clock
             {
                 labelTime.Text += $"\n{DateTime.Today.ToString("yyyy.MM.dd")}";
             }
+            if (showWeekdayToolStripMenuItem.Checked)
+            {
+                labelTime.Text += $"\n{DateTime.Now.DayOfWeek}";
+            }
             //notifyIconSystemTray.Text = "Curret time " + DateTime.Now.ToString("HH:mm:ss");
+            if (
+                alarm != null &&
+                alarm.Weekdays[((int)DateTime.Now.DayOfWeek == 0 ? 6 : (int)DateTime.Now.DayOfWeek - 1)] == true &&
+                DateTime.Now.Hour == alarm.Time.Hour &&
+                DateTime.Now.Minute == alarm.Time.Minute &&
+                DateTime.Now.Second == alarm.Time.Second
+                )
+            {
+                //MessageBox.Show(alarm.Filename, "Alarm", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Console.WriteLine("ALARM:----" + alarm.ToString());
+                PlayAlarm();
+                GetNextaLarm();
+            }
+            if (DateTime.Now.Second == 0)
+            {
+                GetNextaLarm();
+                Console.WriteLine("Minute");
+            }
         }
-
+        
+        void PlayAlarm()
+        {
+            axWindowsMediaPlayer.URL = alarm.Filename;
+            axWindowsMediaPlayer.settings.volume = 100;
+            axWindowsMediaPlayer.Ctlcontrols.play();
+            axWindowsMediaPlayer.Visible = true;
+        }
+        
         private void SetVisibility(bool visible)
         {
             this.TransparencyKey = visible ? Color.Empty : this.BackColor;//цвет
@@ -198,6 +246,7 @@ namespace Clock
             labelTime.BackColor = foregroundColorDialog.Color;//цвет фона? Color.LightGoldenrodYellow
             //labelTime.ForeColor = visible ? Color.Empty : backgroundColorDialog.Color;//цвет шрифта? 
             //labelTime.BackColor = visible ? Color.Empty : foregroundColorDialog.Color;//цвет фона? Color.LightGoldenrodYellow
+            axWindowsMediaPlayer.Visible = false;
         }
 
         private void btnHideControls_Click(object sender, EventArgs e)
@@ -308,11 +357,12 @@ namespace Clock
             //    labelTime.Font = fontDialog.Font;
             //}
         }
-              
+
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             SaveSettengs();
+            alarmList.SaveAlarmsToFile("alarms.csv");
         }
 
         private void toolStripMenuItemShowDate_CheckedChanged(object sender, EventArgs e)
@@ -357,12 +407,29 @@ namespace Clock
         private void будильникиToolStripMenuItem_Click(object sender, EventArgs e)
         {
             alarmList.ShowDialog(this);
+            GetNextaLarm();
+        }
+
+        void SetPlayerInvisible(object sender, AxWMPLib._WMPOCXEvents_AudioLanguageChangeEventHandler e)
+        {
+            if (axWindowsMediaPlayer.playState == WMPLib.WMPPlayState.wmppsMediaEnded)
+                axWindowsMediaPlayer.Visible = false;
+        }
+        //void SetPlayerInvisible(object sender, AxWMPLib._WMPOCXEvents_PlayStateChangeEvent e)
+        //{
+        //    if (axWindowsMediaPlayer.playState == WMPLib.WMPPlayState.wmppsMediaEnded)
+        //        axWindowsMediaPlayer.Visible = false;
+        //}
+        void SetPlayerInvisible(object sender, AxWMPLib._WMPOCXEvents_EndOfStreamEvent e)
+        {
+            if (axWindowsMediaPlayer.playState == WMPLib.WMPPlayState.wmppsMediaEnded) 
+                axWindowsMediaPlayer.Visible = false;
         }
 
         [DllImport("kernel32.dll")]
         static extern bool AllocConsole();
 
-        
+
         private void labelTime_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             toolStripMenuItemShowControls.Checked = true;
@@ -386,7 +453,7 @@ namespace Clock
                 this.Top += e.Y - lastPoint.Y;
             }
         }
-       
+
         private void labelTime_MouseDown(object sender, MouseEventArgs e)
         {
             lastPoint = new Point(e.X, e.Y);
@@ -396,5 +463,6 @@ namespace Clock
             //this.WndProc(ref n);
         }
 
+        
     }
 }

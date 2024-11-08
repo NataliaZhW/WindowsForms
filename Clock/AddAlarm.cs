@@ -24,6 +24,8 @@ namespace Clock
             //alarm = new Alarm();
             openFileDialogSound.Filter = "MP-3 (*.mp3)|*.mp3|Flac (*.flac)|*.flac|All Audio|*.mp3;*.flac";
             openFileDialogSound.FilterIndex = 3;
+            for (int i = 0; i < checkedListBoxWeek.Items.Count; i++)
+                checkedListBoxWeek.SetItemChecked(i, true);
 
         }
         public AddAlarm(Alarm alarm) : this()
@@ -77,9 +79,7 @@ namespace Clock
             Alarm.Time = dateTimePickerTime.Value;
             Alarm.Filename = labelFilename.Text;
             for (int i = 0; i < Alarm.Weekdays.Length; i++) Alarm.Weekdays[i] = false;
-            {
-                
-            }
+            
             for (int i = 0; i < checkedListBoxWeek.CheckedIndices.Count; i++)//checkedListBoxWeek.Items[i]
             {
                 //Свойство 'CheckedIndices' - это коллекция, которая содержит индексы выбраннх Галочек в checkedListBox.
