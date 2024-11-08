@@ -15,14 +15,15 @@ namespace Clock
 
         public bool[] Weekdays { get; set; } //= new bool[7] ;
                                              //public string Filename { get; set; } = "";
+        public string Filename { get; set; } = "";
 
-        static readonly string Default_Alarm_File = "D:\\Всякое\\музыка\\с телефона\\будильники\\a.f.i._-_prelude_12_21_(basemp3.ru).mp3";
-        string filename;
-            public string Filename 
-        { 
-            set => filename = value;
-            get => System.IO.File.Exists(filename) ? filename : Path.GetFullPath(Default_Alarm_File);
-        }
+        //static readonly string Default_Alarm_File = "D:\\Всякое\\музыка\\с телефона\\будильники\\a.f.i._-_prelude_12_21_(basemp3.ru).mp3";
+        //string filename;
+        //    public string Filename 
+        //{ 
+        //    set => filename = value;
+        //    get => System.IO.File.Exists(filename) ? filename : Path.GetFullPath(Default_Alarm_File);
+        //}
 
         public Alarm()
         {

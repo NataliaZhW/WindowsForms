@@ -34,6 +34,9 @@ namespace Clock
         string fontName;
         string FontFile { get; set; }
 
+        static string Default_Alarm_File = "..\\Sound\\a.f.i._-_prelude_12_21_(basemp3.ru).mp3";
+        
+
         public MainForm()
         {
             //Не работает
@@ -268,7 +271,12 @@ namespace Clock
             //}
             //sr.Close();
 
-            axWindowsMediaPlayer.URL = alarm.Filename;
+            //axWindowsMediaPlayer.URL = alarm.Filename;
+            axWindowsMediaPlayer.URL =
+                File.Exists(alarm.Filename) ?
+                alarm.Filename :
+                Path.GetFullPath(Default_Alarm_File); 
+            
             axWindowsMediaPlayer.settings.volume = 100;
             axWindowsMediaPlayer.Ctlcontrols.play();
             axWindowsMediaPlayer.Visible = true;
