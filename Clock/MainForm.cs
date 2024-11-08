@@ -188,12 +188,12 @@ namespace Clock
             List<Alarm> alarms = new List<Alarm>();
             foreach (Alarm item in alarmList.ListBoxAlarms.Items)
             {
-                if (item.Time > DateTime.Now) alarms.Add(item);
+                if (item.Time.TimeOfDay > DateTime.Now.TimeOfDay) alarms.Add(item);
             }
             if (alarms.Min() != null) alarm = alarms.Min();
             Console.WriteLine(alarm);//.ToString()            
         }
-        
+
         private void timer1_Tick(object sender, EventArgs e)
         {
             labelTime.Text = DateTime.Now.ToString("HH:mm:ss");
@@ -225,15 +225,58 @@ namespace Clock
                 Console.WriteLine("Minute");
             }
         }
-        
+
+        bool PlayerIsOn = false;
         void PlayAlarm()
         {
+            //static readonly string Default_Alarm_File = "a.f.i._-_prelude_12_21_(basemp3.ru).mp3";
+
+            StreamReader srw = new StreamReader(alarm.Filename);
+            //try
+            //{
+            //    List<string> settengs = new List<string>();
+            //    while (!sr.EndOfStream)
+            //    {
+            //        settengs.Add(sr.ReadLine());
+            //    }
+            //    sr.Close();
+
+            //    backgroundColorDialog.Color = Color.FromArgb(Convert.ToInt32(settengs.ToArray()[0]));
+            //    foregroundColorDialog.Color = Color.FromArgb(Convert.ToInt32(settengs.ToArray()[1]));
+            //    //sr.WriteLine(labelTime.);
+
+            //    //Process.Start("notepad", "settings.txt");
+            //    FontFile = settengs.ToArray()[2];
+            //    topmostToolStripMenuItem.Checked = bool.Parse(settengs.ToArray()[3]);
+            //    toolStripMenuItemShowDate.Checked = bool.Parse(settengs.ToArray()[4]); ;
+
+            //    //MessageBox.Show(fontName);
+            //    labelTime.Font = choozeFontDialog.SetFontFile(FontFile);
+            //    labelTime.ForeColor = foregroundColorDialog.Color;
+            //    labelTime.BackColor = backgroundColorDialog.Color;
+
+            //    RegistryKey rk = Registry.CurrentUser.OpenSubKey(
+            //                 "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+            //    object run = rk.GetValue("Clock");
+            //    if (run != null) запускатьПриСтартеWindowsToolStripMenuItem.Checked = true;
+            //    rk.Dispose();
+
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message, "Load settings error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
+            //sr.Close();
+
             axWindowsMediaPlayer.URL = alarm.Filename;
             axWindowsMediaPlayer.settings.volume = 100;
             axWindowsMediaPlayer.Ctlcontrols.play();
             axWindowsMediaPlayer.Visible = true;
+            Console.WriteLine($"PlayAlarm:/t");
+            PlayerIsOn = true;
+
         }
-        
+
         private void SetVisibility(bool visible)
         {
             this.TransparencyKey = visible ? Color.Empty : this.BackColor;//цвет
@@ -410,19 +453,27 @@ namespace Clock
             GetNextaLarm();
         }
 
-        void SetPlayerInvisible(object sender, AxWMPLib._WMPOCXEvents_AudioLanguageChangeEventHandler e)
-        {
-            if (axWindowsMediaPlayer.playState == WMPLib.WMPPlayState.wmppsMediaEnded)
-                axWindowsMediaPlayer.Visible = false;
-        }
+        //void SetPlayerInvisible(object sender, AxWMPLib._WMPOCXEvents_AudioLanguageChangeEventHandler e)
+        //{
+        //    if (axWindowsMediaPlayer.playState == WMPLib.WMPPlayState.wmppsMediaEnded)
+        //        axWindowsMediaPlayer.Visible = false;
+        //}
         //void SetPlayerInvisible(object sender, AxWMPLib._WMPOCXEvents_PlayStateChangeEvent e)
         //{
         //    if (axWindowsMediaPlayer.playState == WMPLib.WMPPlayState.wmppsMediaEnded)
         //        axWindowsMediaPlayer.Visible = false;
         //}
-        void SetPlayerInvisible(object sender, AxWMPLib._WMPOCXEvents_EndOfStreamEvent e)
+        //void SetPlayerInvisible(object sender, AxWMPLib._WMPOCXEvents_EndOfStreamEvent e)
+        //{
+        //    if (axWindowsMediaPlayer.playState == WMPLib.WMPPlayState.wmppsMediaEnded) 
+        //        axWindowsMediaPlayer.Visible = false;
+        //}
+
+
+        //MEDIA PLAYER VISIBILITY
+        void SetPlayerInvisible(object sender, AxWMPLib._WMPOCXEvents_PlayStateChangeEvent e)
         {
-            if (axWindowsMediaPlayer.playState == WMPLib.WMPPlayState.wmppsMediaEnded) 
+            if (axWindowsMediaPlayer.playState != WMPLib.WMPPlayState.wmppsPlaying)
                 axWindowsMediaPlayer.Visible = false;
         }
 
@@ -463,6 +514,6 @@ namespace Clock
             //this.WndProc(ref n);
         }
 
-        
+
     }
 }

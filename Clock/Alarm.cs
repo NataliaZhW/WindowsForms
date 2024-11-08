@@ -3,19 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Clock
 {
     public class Alarm:IComparable
     {
         public static readonly string[] WeekDayNames = new string[7] { "Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс" };
-
         public DateTime Date { get; set; }
         public DateTime Time { get; set; }
 
         public bool[] Weekdays { get; set; } //= new bool[7] ;
-        public string Filename { get; set; } = "";
+                                             //public string Filename { get; set; } = "";
 
+        static readonly string Default_Alarm_File = "D:\\Всякое\\музыка\\с телефона\\будильники\\a.f.i._-_prelude_12_21_(basemp3.ru).mp3";
+        string filename;
+            public string Filename 
+        { 
+            set => filename = value;
+            get => System.IO.File.Exists(filename) ? filename : Path.GetFullPath(Default_Alarm_File);
+        }
 
         public Alarm()
         {
@@ -87,9 +94,8 @@ namespace Clock
         }
         public int CompareTo(object other)
         { 
-            return this.Time.CompareTo((other as Alarm).Time);
+            return this.Time.TimeOfDay.CompareTo((other as Alarm).Time.TimeOfDay);
             //Оператор 'as' преобразует значение слева в тип справа.
-
         }
     }
 }
