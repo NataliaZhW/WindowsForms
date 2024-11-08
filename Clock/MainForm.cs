@@ -34,7 +34,9 @@ namespace Clock
         string fontName;
         string FontFile { get; set; }
 
-        static string Default_Alarm_File = "..\\Sound\\a.f.i._-_prelude_12_21_(basemp3.ru).mp3";
+        static string Default_Alarm_File = "D:\\WindowsApp\\Desktop\\C++\\Новая папка (2)\\WindowsForms\\Clock\\Sound\\a.f.i._-_prelude_12_21_(basemp3.ru).mp3";
+        //static string Default_Alarm_File = "..\\Sound\\a.f.i._-_prelude_12_21_(basemp3.ru).mp3";
+        //static readonly string Default_Alarm_File = "D:\\Всякое\\музыка\\с телефона\\будильники\\a.f.i._-_prelude_12_21_(basemp3.ru).mp3";
         
 
         public MainForm()
@@ -233,44 +235,13 @@ namespace Clock
         void PlayAlarm()
         {
             //static readonly string Default_Alarm_File = "a.f.i._-_prelude_12_21_(basemp3.ru).mp3";
-
-            StreamReader srw = new StreamReader(alarm.Filename);
-            //try
-            //{
-            //    List<string> settengs = new List<string>();
-            //    while (!sr.EndOfStream)
-            //    {
-            //        settengs.Add(sr.ReadLine());
-            //    }
-            //    sr.Close();
-
-            //    backgroundColorDialog.Color = Color.FromArgb(Convert.ToInt32(settengs.ToArray()[0]));
-            //    foregroundColorDialog.Color = Color.FromArgb(Convert.ToInt32(settengs.ToArray()[1]));
-            //    //sr.WriteLine(labelTime.);
-
-            //    //Process.Start("notepad", "settings.txt");
-            //    FontFile = settengs.ToArray()[2];
-            //    topmostToolStripMenuItem.Checked = bool.Parse(settengs.ToArray()[3]);
-            //    toolStripMenuItemShowDate.Checked = bool.Parse(settengs.ToArray()[4]); ;
-
-            //    //MessageBox.Show(fontName);
-            //    labelTime.Font = choozeFontDialog.SetFontFile(FontFile);
-            //    labelTime.ForeColor = foregroundColorDialog.Color;
-            //    labelTime.BackColor = backgroundColorDialog.Color;
-
-            //    RegistryKey rk = Registry.CurrentUser.OpenSubKey(
-            //                 "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-            //    object run = rk.GetValue("Clock");
-            //    if (run != null) запускатьПриСтартеWindowsToolStripMenuItem.Checked = true;
-            //    rk.Dispose();
-
+            //string filename;
+            //    public string Filename 
+            //{ 
+            //    set => filename = value;
+            //    get => System.IO.File.Exists(filename) ? filename : Path.GetFullPath(Default_Alarm_File);
             //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message, "Load settings error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
-            //sr.Close();
-
+            
             //axWindowsMediaPlayer.URL = alarm.Filename;
             axWindowsMediaPlayer.URL =
                 File.Exists(alarm.Filename) ?
@@ -280,7 +251,7 @@ namespace Clock
             axWindowsMediaPlayer.settings.volume = 100;
             axWindowsMediaPlayer.Ctlcontrols.play();
             axWindowsMediaPlayer.Visible = true;
-            Console.WriteLine($"PlayAlarm:/t");
+            Console.WriteLine($"Play ALARM: {alarm}");//$"PlayAlarm:/t"
             PlayerIsOn = true;
 
         }
